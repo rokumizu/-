@@ -189,11 +189,11 @@
       margin-top: 0;
       color: #0077cc;
     }
-
-    .faq {
-      padding: 100px 20px;
-      text-align: center;
-    }
+.faq {
+  padding: 100px 20px;
+  text-align: center;
+  margin-bottom: 80px; /* 👈 追加するだけ！ */
+}
 
     .faq h2 {
       margin-bottom: 60px;
@@ -286,36 +286,52 @@
       text-decoration: underline;
     }
 
-    .fixed-cta {
-      position: fixed;
-      bottom: -100px;
-      left: 0;
-      width: 100%;
-      background: #0077cc;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      transition: bottom 0.5s;
-      z-index: 999;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    }
+   .fixed-cta {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 119, 204, 0.9); /* ← 不透明度90%に変更！ */
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  transition: bottom 0.5s;
+  z-index: 999;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
 
     .fixed-cta h2 {
       margin: 0 0 10px;
       font-size: 24px;
     }
 
-    .fixed-cta a {
-      display: inline-block;
-      background: #fff;
-      color: #0077cc;
-      padding: 12px 30px;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 50px;
-      transition: background 0.3s, color 0.3s;
-      margin: 0 auto;
-    }
+   .fixed-cta {
+  /* これが親 */
+  text-align: center;  /* ← これ大事！ */
+}
+
+.fixed-cta a {
+  display: inline-block;  /* ← ボタン感保つ！ */
+  padding: 12px 30px;     /* ← ボタンの内側余白 */
+  background: #fff;
+  color: #0077cc;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 50px;    /* ← 丸ボタン */
+  transition: background 0.3s, color 0.3s;
+}
+
+.fixed-cta a:hover {
+  background: #00bbdd;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .fixed-cta a {
+    padding: 12px 20px;  /* スマホは少しパディング小さめ */
+  }
+}
+
 
     .fixed-cta a:hover {
       background: #00bbdd;
@@ -357,17 +373,17 @@
     <div class="trust-card">
       <img src="images/icon1.png" alt="件数アイコン">
       <h3>年間調査件数</h3>
-      <p class="count" data-target="300">0</p>
+      <p class="count" data-target="300" data-unit="件">0</p>
     </div>
     <div class="trust-card">
       <img src="images/icon2.png" alt="企業アイコン">
       <h3>導入企業</h3>
-      <p class="count" data-target="500">0</p>
+      <p class="count" data-target="500" data-unit="社">0</p>
     </div>
     <div class="trust-card">
       <img src="images/icon3.png" alt="信頼アイコン">
       <h3>継続率</h3>
-      <p class="count" data-target="98.5">0</p>
+     <p class="count" data-target="98.5" data-unit="%">0</p>
     </div>
   </section>
 
@@ -400,7 +416,7 @@
 </section>
 
   <footer>
-    <p>© 株式会社アンディプランニング All Rights Reserved.</p>
+    <p></p>
   </footer>
 
   <div class="fixed-cta" id="fixedCta">
@@ -435,15 +451,38 @@
     }, 5000);
 
     // フェードイン & カウントアップ
-    const revealItems = document.querySelectorAll('.trust-card, .card');
-    let counted = false;
-    window.addEventListener('scroll', () => {
-      revealItems.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          item.classList.add('visible');
+   // フェードイン & カウントアップ（単位付き）
+const revealItems = document.querySelectorAll('.trust-card, .card');
+let counted = false;
+window.addEventListener('scroll', () => {
+  revealItems.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      item.classList.add('visible');
+    }
+  });
+
+  if (!counted && document.querySelector('.trust-cards').getBoundingClientRect().top < window.innerHeight - 50) {
+    counted = true;
+    document.querySelectorAll('.count').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      let current = 0;
+      const step = target / 100;
+      const unit = el.dataset.unit || ''; // ← 追加
+
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          el.textContent = target + unit;
+          clearInterval(interval);
+        } else {
+          el.textContent = Math.round(current * 10) / 10 + unit;
         }
-      });
+      }, 20);
+    });
+  }
+});
+
 
       if (!counted && document.querySelector('.trust-cards').getBoundingClientRect().top < window.innerHeight - 50) {
         counted = true;
@@ -462,7 +501,7 @@
           }, 20);
         });
       }
-    });
+    ;
 
     // FAQ toggle
     document.querySelectorAll('.question').forEach(q => {
@@ -473,16 +512,31 @@
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     hamburger.addEventListener('click', () => navMenu.classList.toggle('show'));
+// CTA Show/Hide + 一番下で必ず表示
+// CTA Show/Hide + 一番下で必ず表示
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const cta = document.getElementById('fixedCta');
+  const scrollY = window.scrollY;
+  const windowH = window.innerHeight;
+  const docH = document.documentElement.scrollHeight;
 
-    // CTA Show/Hide
-    let lastScrollY = window.scrollY;
-    window.addEventListener('scroll', () => {
-      const cta = document.getElementById('fixedCta');
-      window.scrollY < lastScrollY ? cta.style.bottom = '0' : cta.style.bottom = '-100px';
-      lastScrollY = window.scrollY;
-    });
+  if (scrollY + windowH >= docH - 50) {
+    cta.style.bottom = '0';
+  } else {
+    if (scrollY < lastScrollY) {
+      cta.style.bottom = '0';
+    } else {
+      cta.style.bottom = '-200px'; // ← JS側も一致！
+    }
+  }
+  lastScrollY = scrollY;
+});
+
+  lastScrollY = scrollY;
+;
+
   </script>
 
 </body>
 </html>
-
