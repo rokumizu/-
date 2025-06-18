@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>株式会社アンディプランニング | せかいをつなぐソリューション</title>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -154,7 +153,7 @@
       justify-content: center;
       gap: 30px;
       padding: 50px 20px;
-      margin-bottom: 120px; /* CTA分のスペース確保 */
+      margin-bottom: 120px;
     }
 
     .card {
@@ -191,21 +190,99 @@
       color: #0077cc;
     }
 
+    .faq {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .faq h2 {
+      margin-bottom: 60px;
+      font-size: 36px;
+      color: #0077cc;
+    }
+
+    .qa-item {
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .question {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+      position: relative;
+      padding: 20px 50px 20px 60px;
+      background: #f0f8ff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .question::before {
+      content: 'Q';
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      font-weight: bold;
+      color: #0077cc;
+      background: #fff;
+      border-radius: 50%;
+      border: 2px solid #0077cc;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .question::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      font-size: 24px;
+      transition: transform 0.3s;
+    }
+
+    .question.active::after {
+      content: '−';
+    }
+
+    .question:hover {
+      background: #e0f0ff;
+    }
+
+    .answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 20px;
+      background: #ffffff;
+      border-left: 4px solid #0077cc;
+      border-radius: 0 8px 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .question.active + .answer {
+      max-height: 300px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
     footer {
-      background: #333;
+      background: rgba(51,51,51,0.8);
       color: #fff;
       text-align: center;
       padding: 40px 20px;
     }
 
-    footer p {
+    footer p, footer a {
       margin: 5px 0;
       font-size: 14px;
-    }
-
-    footer a {
       color: #fff;
-      margin: 0 5px;
       text-decoration: underline;
     }
 
@@ -237,6 +314,7 @@
       font-weight: bold;
       border-radius: 50px;
       transition: background 0.3s, color 0.3s;
+      margin: 0 auto;
     }
 
     .fixed-cta a:hover {
@@ -252,103 +330,74 @@
       font-size: 20px;
     }
 
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
-      nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #fff;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        position: absolute;
-        top: 70px; /* header height */
-        left: 0;
-      }
-
-      nav.show {
-        display: flex;
-      }
-
-      nav a {
-        margin: 15px 20px;
-        border-bottom: 1px solid #ddd;
-      }
-
-      header {
-        flex-wrap: wrap;
-        padding: 10px 20px;
-      }
+    @media(max-width:768px){
+      .hamburger { display: block; }
+      nav { display: none; flex-direction: column; width: 100%; background: rgba(255,255,255,0.9); box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: absolute; top: 70px; left: 0; }
+      nav.show { display: flex; }
+      nav a { margin: 15px 20px; border-bottom: 1px solid #ddd; }
+      header { flex-wrap: wrap; padding: 10px 20px; }
+      .fixed-cta a { display: block; max-width: 200px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-area">
-      <img src="images/mylogo.PNG" alt="ロゴ" class="logo">
-      <div class="logo-text" id="logo-text"></div>
-    </div>
-    <nav id="nav-menu">
-      <a href="#">会社案内</a>
-      <a href="#">業務内容</a>
-      <a href="#">個人情報保護</a>
-    </nav>
+    <div class="logo-area"><img src="images/mylogo.PNG" alt="ロゴ" class="logo"><div class="logo-text" id="logo-text"></div></div>
+    <nav id="nav-menu"><a href="#">会社案内</a><a href="#">業務内容</a><a href="#">個人情報保護</a></nav>
     <div class="hamburger" id="hamburger">&#9776;</div>
   </header>
 
   <section class="hero">
-    <img src="images/slide1.png" class="active" alt="slide1">
-    <img src="images/slide2.png" alt="slide2">
+    <img src="images/slide1.png" class="active">
+    <img src="images/slide2.png">
   </section>
 
   <section class="trust-cards">
     <div class="trust-card">
       <img src="images/icon1.png" alt="件数アイコン">
       <h3>年間調査件数</h3>
-      <p>300件以上</p>
+      <p class="count" data-target="300">0</p>
     </div>
     <div class="trust-card">
       <img src="images/icon2.png" alt="企業アイコン">
       <h3>導入企業</h3>
-      <p>500社以上</p>
+      <p class="count" data-target="500">0</p>
     </div>
     <div class="trust-card">
       <img src="images/icon3.png" alt="信頼アイコン">
       <h3>継続率</h3>
-      <p>98.5%</p>
+      <p class="count" data-target="98.5">0</p>
     </div>
   </section>
 
   <section class="articles">
-    <div class="card">
-      <img src="images/card1.png" alt="">
-      <h3>最新マーケティング戦略</h3>
-      <p>SNSマーケティングとコンテンツ戦略を解説。</p>
-    </div>
-    <div class="card">
-      <img src="images/card2.png" alt="">
-      <h3>BtoBビジネス成功事例</h3>
-      <p>企業間取引における成功ポイントと最新事例。</p>
-    </div>
-    <div class="card">
-      <img src="images/card3.png" alt="">
-      <h3>データ分析の最新動向</h3>
-      <p>ビッグデータ活用とAI分析の最新事例を紹介。</p>
-    </div>
-    <div class="card">
-      <img src="images/card4.png" alt="">
-      <h3>ブランド戦略の成功法則</h3>
-      <p>中小企業でもできるブランド構築のポイント。</p>
-    </div>
-    <div class="card">
-      <img src="images/card5.png" alt="">
-      <h3>海外市場調査のポイント</h3>
-      <p>グローバル展開に向けたリサーチの進め方。</p>
-    </div>
+    <!-- あなたのカードコンテンツをここに追加 -->
   </section>
+
+  <section class="faq">
+  <h2>よくあるご質問</h2>
+  <div class="qa-item">
+    <div class="question">Q1. サービス開始までどのくらいかかりますか？</div>
+    <div class="answer">通常、お申し込みから約1〜2週間で開始可能です。</div>
+  </div>
+  <div class="qa-item">
+    <div class="question">Q2. 小規模でも依頼できますか？</div>
+    <div class="answer">はい、規模に関係なくご相談ください。</div>
+  </div>
+  <div class="qa-item">
+    <div class="question">Q3. 料金はどのように決まりますか？</div>
+    <div class="answer">内容やボリュームに応じてお見積もりいたします。</div>
+  </div>
+  <div class="qa-item">
+    <div class="question">Q4. 他社との違いは何ですか？</div>
+    <div class="answer">豊富な実績と独自のノウハウで、最適な調査を実現します。</div>
+  </div>
+  <div class="qa-item">
+    <div class="question">Q5. アフターサポートはありますか？</div>
+    <div class="answer">はい、調査後のフォローアップで対応いたします。</div>
+  </div>
+</section>
 
   <footer>
     <p>© 株式会社アンディプランニング All Rights Reserved.</p>
@@ -362,7 +411,7 @@
 
   <script>
     // タイプライター
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function(){
       const text = "せかいをつなぐ\nソリューション";
       const target = document.getElementById("logo-text");
       let i = 0;
@@ -385,33 +434,51 @@
       slides[current].classList.add('active');
     }, 5000);
 
-    // フェードイン
+    // フェードイン & カウントアップ
     const revealItems = document.querySelectorAll('.trust-card, .card');
+    let counted = false;
     window.addEventListener('scroll', () => {
       revealItems.forEach(item => {
         const rect = item.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 50) {
+        if (rect.top < window.innerHeight - 50) {
           item.classList.add('visible');
         }
       });
+
+      if (!counted && document.querySelector('.trust-cards').getBoundingClientRect().top < window.innerHeight - 50) {
+        counted = true;
+        document.querySelectorAll('.count').forEach(el => {
+          const target = parseFloat(el.dataset.target);
+          let current = 0;
+          const step = target / 100;
+          const interval = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              el.textContent = target;
+              clearInterval(interval);
+            } else {
+              el.textContent = Math.round(current * 10) / 10;
+            }
+          }, 20);
+        });
+      }
     });
 
-    // ハンバーガーメニュー
+    // FAQ toggle
+    document.querySelectorAll('.question').forEach(q => {
+      q.addEventListener('click', () => q.classList.toggle('active'));
+    });
+
+    // ハンバーガー
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
+    hamburger.addEventListener('click', () => navMenu.classList.toggle('show'));
 
     // CTA Show/Hide
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
       const cta = document.getElementById('fixedCta');
-      if (window.scrollY < lastScrollY) {
-        cta.style.bottom = '0';
-      } else {
-        cta.style.bottom = '-100px';
-      }
+      window.scrollY < lastScrollY ? cta.style.bottom = '0' : cta.style.bottom = '-100px';
       lastScrollY = window.scrollY;
     });
   </script>
@@ -419,5 +486,3 @@
 </body>
 </html>
 
-</body>
-</html>
