@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>株式会社アンディプランニング | せかいをつなぐソリューション</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Poppins', 'Noto Sans JP', sans-serif;
       color: #333;
       background: #f9f9f9;
     }
@@ -30,7 +32,7 @@
     }
 
     .logo {
-      height: 80px;
+      height: 70px;
       margin-right: 20px;
       opacity: 0;
       animation: fadeIn 2s forwards;
@@ -46,6 +48,11 @@
       font-weight: bold;
       color: #0077cc;
       white-space: pre-line;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -94,22 +101,22 @@
 
     .trust-cards {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 40px;
       padding: 50px 20px;
       background: #0077cc;
-      flex-wrap: wrap;
     }
 
     .trust-card {
       background: #fff;
       color: #0077cc;
-      padding: 20px;
+      padding: 30px;
       border-radius: 10px;
       text-align: center;
       width: 200px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.5s, box-shadow 0.5s, opacity 0.6s, transform 0.6s;
+      transition: transform 0.5s, box-shadow 0.5s, opacity 0.6s;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -137,9 +144,10 @@
 
     .articles {
       display: flex;
-      overflow-x: auto;
-      gap: 20px;
-      padding: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
     }
 
     .card {
@@ -147,8 +155,9 @@
       border-radius: 10px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
       padding: 20px;
-      flex: 0 0 300px;
-      transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s, transform 0.6s;
+      width: 300px;
+      max-width: 90%;
+      transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -322,11 +331,10 @@
         flex-direction: column;
         align-items: flex-start;
       }
-      .logo { height: 70px; }
+      .logo { height: 60px; }
       nav { margin-top: 10px; }
       nav a { margin-left: 0; margin-right: 20px; }
       .hero { height: 300px; }
-      .trust-cards { flex-direction: column; gap: 20px; }
     }
   </style>
 </head>
@@ -371,34 +379,28 @@
   </section>
 
   <!-- === 記事カード === -->
-<section class="articles">
-  <div class="card">
-    <img src="images/card1.png" alt="">
-    <h3>最新マーケティング戦略</h3>
-    <p>SNSマーケティングとコンテンツ戦略を解説。</p>
-  </div>
-  <div class="card">
-    <img src="images/card2.png" alt="">
-    <h3>BtoBビジネス成功事例</h3>
-    <p>企業間取引における成功ポイントと最新事例。</p>
-  </div>
-  <div class="card">
-    <img src="images/card3.png" alt="">
-    <h3>データ分析の最新動向</h3>
-    <p>ビッグデータ活用とAI分析の最新事例を紹介。</p>
-  </div>
-  <div class="card">
-    <img src="images/card4.png" alt="">
-    <h3>ブランド戦略の成功法則</h3>
-    <p>中小企業でもできるブランド構築のポイント。</p>
-  </div>
-  <div class="card">
-    <img src="images/card5.png" alt="">
-    <h3>海外市場調査のポイント</h3>
-    <p>グローバル展開に向けたリサーチの進め方。</p>
-  </div>
-</section>
-
+  <section class="articles">
+    <div class="card">
+      <img src="images/card1.png" alt="">
+      <h3>最新マーケティング戦略</h3>
+      <p>SNSマーケティングとコンテンツ戦略を解説。</p>
+    </div>
+     <div class="card">
+      <img src="images/card3.png" alt="">
+      <h3>データ分析の最新動向</h3>
+      <p>ビッグデータ活用とAI分析の最新事例を紹介。</p>
+    </div>
+    <div class="card">
+      <img src="images/card4.png" alt="">
+      <h3>ブランド戦略の成功法則</h3>
+      <p>中小企業でもできるブランド構築のポイント。</p>
+    </div>
+    <div class="card">
+      <img src="images/card5.png" alt="">
+      <h3>海外市場調査のポイント</h3>
+      <p>グローバル展開に向けたリサーチの進め方。</p>
+    </div>
+  </section>
 
   <!-- === FAQ === -->
   <section class="faq">
