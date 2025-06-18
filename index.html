@@ -79,6 +79,12 @@
       transform: scaleX(1);
     }
 
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
     .hero {
       position: relative;
       width: 100%;
@@ -185,88 +191,6 @@
       color: #0077cc;
     }
 
-    .faq {
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    .faq h2 {
-      margin-bottom: 60px;
-      font-size: 36px;
-      color: #0077cc;
-    }
-
-    .qa-item {
-      margin-bottom: 30px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-    }
-
-    .question {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 20px;
-      position: relative;
-      padding: 20px 50px 20px 60px;
-      background: #f0f8ff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .question::before {
-      content: 'Q';
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 22px;
-      font-weight: bold;
-      color: #0077cc;
-      background: #fff;
-      border-radius: 50%;
-      border: 2px solid #0077cc;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .question::after {
-      content: '+';
-      position: absolute;
-      right: 20px;
-      font-size: 24px;
-      transition: transform 0.3s;
-    }
-
-    .question.active::after {
-      content: '−';
-    }
-
-    .question:hover {
-      background: #e0f0ff;
-    }
-
-    .answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-      padding: 0 20px;
-      background: #ffffff;
-      border-left: 4px solid #0077cc;
-      border-radius: 0 8px 8px 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .question.active + .answer {
-      max-height: 300px;
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-
     footer {
       background: #333;
       color: #fff;
@@ -329,43 +253,57 @@
     }
 
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 20px;
+      .hamburger {
+        display: block;
       }
+
       nav {
-        width: 100%;
+        display: none;
         flex-direction: column;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: absolute;
+        top: 70px; /* header height */
+        left: 0;
       }
+
+      nav.show {
+        display: flex;
+      }
+
       nav a {
-        margin: 5px 0;
+        margin: 15px 20px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      header {
+        flex-wrap: wrap;
+        padding: 10px 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- === ヘッダー === -->
   <header>
     <div class="logo-area">
       <img src="images/mylogo.PNG" alt="ロゴ" class="logo">
       <div class="logo-text" id="logo-text"></div>
     </div>
-    <nav>
+    <nav id="nav-menu">
       <a href="#">会社案内</a>
       <a href="#">業務内容</a>
       <a href="#">個人情報保護</a>
     </nav>
+    <div class="hamburger" id="hamburger">&#9776;</div>
   </header>
 
-  <!-- === スライダー === -->
   <section class="hero">
     <img src="images/slide1.png" class="active" alt="slide1">
     <img src="images/slide2.png" alt="slide2">
   </section>
 
-  <!-- === 実績カード === -->
   <section class="trust-cards">
     <div class="trust-card">
       <img src="images/icon1.png" alt="件数アイコン">
@@ -384,7 +322,6 @@
     </div>
   </section>
 
-  <!-- === 記事カード === -->
   <section class="articles">
     <div class="card">
       <img src="images/card1.png" alt="">
@@ -413,7 +350,15 @@
     </div>
   </section>
 
-  <!-- === FAQ, フッター, CTA, スクリプトはそのまま === -->
+  <footer>
+    <p>© 株式会社アンディプランニング All Rights Reserved.</p>
+  </footer>
+
+  <div class="fixed-cta" id="fixedCta">
+    <h2>今すぐお問い合わせ</h2>
+    <a href="#">無料相談はこちら</a>
+    <span class="close-cta" onclick="document.getElementById('fixedCta').style.display='none'">×</span>
+  </div>
 
   <script>
     // タイプライター
@@ -440,13 +385,6 @@
       slides[current].classList.add('active');
     }, 5000);
 
-    // FAQ toggle
-    document.querySelectorAll('.question').forEach(q => {
-      q.addEventListener('click', () => {
-        q.classList.toggle('active');
-      });
-    });
-
     // フェードイン
     const revealItems = document.querySelectorAll('.trust-card, .card');
     window.addEventListener('scroll', () => {
@@ -456,6 +394,13 @@
           item.classList.add('visible');
         }
       });
+    });
+
+    // ハンバーガーメニュー
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
     });
 
     // CTA Show/Hide
@@ -470,6 +415,9 @@
       lastScrollY = window.scrollY;
     });
   </script>
+
+</body>
+</html>
 
 </body>
 </html>
