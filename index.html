@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>株式会社アンディプランニング | せかいをつなぐソリューション</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: #333;
+      background: #f9f9f9;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 10px 50px;
+      z-index: 1000;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 80px;
+      margin-right: 20px;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .logo-text {
+      line-height: 1.2;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0077cc;
+      white-space: pre-line;
+    }
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 18px;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 100%; height: 2px;
+      background: #0077cc;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .hero {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .trust-cards {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 50px 20px;
+      background: #0077cc;
+      flex-wrap: wrap;
+    }
+
+    .trust-card {
+      background: #fff;
+      color: #0077cc;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 200px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.5s, box-shadow 0.5s, opacity 0.6s, transform 0.6s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .trust-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .trust-card img {
+      width: 40px;
+      margin-bottom: 10px;
+    }
+
+    .trust-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .trust-card p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .articles {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 50px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      padding: 20px;
+      flex: 0 0 300px;
+      transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s, transform 0.6s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #0077cc;
+    }
+
+    .faq {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .faq h2 {
+      margin-bottom: 60px;
+      font-size: 36px;
+      color: #0077cc;
+    }
+
+    .qa-item {
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .question {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+      position: relative;
+      padding: 20px 50px 20px 60px;
+      background: #f0f8ff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .question::before {
+      content: 'Q';
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      font-weight: bold;
+      color: #0077cc;
+      background: #fff;
+      border-radius: 50%;
+      border: 2px solid #0077cc;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .question::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      font-size: 24px;
+      transition: transform 0.3s;
+    }
+
+    .question.active::after {
+      content: '−';
+    }
+
+    .question:hover {
+      background: #e0f0ff;
+    }
+
+    .answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 20px;
+      background: #ffffff;
+      border-left: 4px solid #0077cc;
+      border-radius: 0 8px 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .question.active + .answer {
+      max-height: 300px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    footer p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #fff;
+      margin: 0 5px;
+      text-decoration: underline;
+    }
+
+    .fixed-cta {
+      position: fixed;
+      bottom: -100px;
+      left: 0;
+      width: 100%;
+      background: #0077cc;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      transition: bottom 0.5s;
+      z-index: 999;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .fixed-cta h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .fixed-cta a {
+      display: inline-block;
+      background: #fff;
+      color: #0077cc;
+      padding: 12px 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 50px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .fixed-cta a:hover {
+      background: #00bbdd;
+      color: #fff;
+    }
+
+    .close-cta {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .logo { height: 70px; }
+      nav { margin-top: 10px; }
+      nav a { margin-left: 0; margin-right: 20px; }
+      .hero { height: 300px; }
+      .trust-cards { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === ヘッダー === -->
+  <header>
+    <div class="logo-area">
+      <img src="images/mylogo.PNG" alt="ロゴ" class="logo">
+      <div class="logo-text" id="logo-text"></div>
+    </div>
+    <nav>
+      <a href="#">会社案内</a>
+      <a href="#">業務内容</a>
+      <a href="#">個人情報保護</a>
+    </nav>
+  </header>
+
+  <!-- === スライダー === -->
+  <section class="hero">
+    <div class="slide active" style="background-image: url('images/slide1.png');"></div>
+    <div class="slide" style="background-image: url('images/slide2.png');"></div>
+  </section>
+
+  <!-- === 実績カード === -->
+  <section class="trust-cards">
+    <div class="trust-card">
+      <img src="images/icon1.png" alt="件数アイコン">
+      <h3>年間調査件数</h3>
+      <p>300件以上</p>
+    </div>
+    <div class="trust-card">
+      <img src="images/icon2.png" alt="企業アイコン">
+      <h3>導入企業</h3>
+      <p>500社以上</p>
+    </div>
+    <div class="trust-card">
+      <img src="images/icon3.png" alt="信頼アイコン">
+      <h3>継続率</h3>
+      <p>98.5%</p>
+    </div>
+  </section>
+
+  <!-- === 記事カード === -->
+<section class="articles">
+  <div class="card">
+    <img src="images/card1.png" alt="">
+    <h3>最新マーケティング戦略</h3>
+    <p>SNSマーケティングとコンテンツ戦略を解説。</p>
+  </div>
+  <div class="card">
+    <img src="images/card2.png" alt="">
+    <h3>BtoBビジネス成功事例</h3>
+    <p>企業間取引における成功ポイントと最新事例。</p>
+  </div>
+  <div class="card">
+    <img src="images/card3.png" alt="">
+    <h3>データ分析の最新動向</h3>
+    <p>ビッグデータ活用とAI分析の最新事例を紹介。</p>
+  </div>
+  <div class="card">
+    <img src="images/card4.png" alt="">
+    <h3>ブランド戦略の成功法則</h3>
+    <p>中小企業でもできるブランド構築のポイント。</p>
+  </div>
+  <div class="card">
+    <img src="images/card5.png" alt="">
+    <h3>海外市場調査のポイント</h3>
+    <p>グローバル展開に向けたリサーチの進め方。</p>
+  </div>
+</section>
+
+
+  <!-- === FAQ === -->
+  <section class="faq">
+    <h2>よくあるご質問</h2>
+    <div class="qa-item">
+      <div class="question">マーケティング調査の依頼方法は？</div>
+      <div class="answer">お問い合わせフォームまたはお電話にてご依頼ください。</div>
+    </div>
+    <div class="qa-item">
+      <div class="question">調査結果はいつ届きますか？</div>
+      <div class="answer">内容により異なりますが、通常2週間〜1ヶ月程度です。</div>
+    </div>
+    <div class="qa-item">
+      <div class="question">調査費用の目安は？</div>
+      <div class="answer">お見積もりは無料です。内容に応じて最適なプランをご提案します。</div>
+    </div>
+    <div class="qa-item">
+      <div class="question">海外調査はできますか？</div>
+      <div class="answer">はい、海外市場も対応可能です。お気軽にご相談ください。</div>
+    </div>
+    <div class="qa-item">
+      <div class="question">調査後の活用方法も提案してくれますか？</div>
+      <div class="answer">はい、調査結果を活かした戦略提案も行っております。</div>
+    </div>
+  </section>
+
+  <!-- === フッター === -->
+  <footer>
+    <p>&copy; 2025 株式会社アンディプランニング</p>
+    <p>〒123-4567 東京都〇〇区〇〇町1-2-3 | Tel: 03-1234-5678</p>
+    <p>
+      <a href="#">Twitter</a> |
+      <a href="#">Facebook</a> |
+      <a href="#">LinkedIn</a>
+    </p>
+  </footer>
+
+  <!-- === 固定CTA === -->
+  <div class="fixed-cta" id="fixedCta">
+    <span class="close-cta" onclick="this.parentElement.style.display='none';">×</span>
+    <h2>無料資料をダウンロード</h2>
+    <a href="#">今すぐダウンロード</a>
+  </div>
+
+  <script>
+    // タイプライター
+    document.addEventListener("DOMContentLoaded", function() {
+      const text = "せかいをつなぐ\nソリューション";
+      const target = document.getElementById("logo-text");
+      let i = 0;
+      function typeWriter() {
+        if (i < text.length) {
+          target.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        }
+      }
+      setTimeout(typeWriter, 1000);
+    });
+
+    // スライダー
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 5000);
+
+    // FAQ toggle
+    document.querySelectorAll('.question').forEach(q => {
+      q.addEventListener('click', () => {
+        q.classList.toggle('active');
+      });
+    });
+
+    // フェードイン
+    const revealItems = document.querySelectorAll('.trust-card, .card');
+    window.addEventListener('scroll', () => {
+      revealItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 50) {
+          item.classList.add('visible');
+        }
+      });
+    });
+
+    // CTA Show/Hide
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const cta = document.getElementById('fixedCta');
+      if (window.scrollY < lastScrollY) {
+        cta.style.bottom = '0';
+      } else {
+        cta.style.bottom = '-100px';
+      }
+      lastScrollY = window.scrollY;
+    });
+  </script>
+
+</body>
+</html>
